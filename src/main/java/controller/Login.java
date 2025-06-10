@@ -4,12 +4,15 @@
  */
 package controller;
 
+import entities.Usuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import services.UsuarioFacadeLocal;
 
 
 /**
@@ -23,7 +26,11 @@ public class Login implements Serializable {
 
     private String usuario;
     private String contrasenna;
-
+    private Usuario user = new Usuario();
+    @EJB
+    UsuarioFacadeLocal ufl;
+    
+    
     public Login(String usuario, String contrasenna) {
         this.usuario = usuario;
         this.contrasenna = contrasenna;
@@ -46,8 +53,8 @@ public class Login implements Serializable {
     }
     
     public String iniciarSesion(){
-        
-        if (usuario.equals("admin") && contrasenna.equals("admin123")) {
+        user = this.ufl.iniciarSesion(usuario, contrasenna);
+        if (user.getIdUsuario() != null ) {
             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
             return "inicio?faces-redirect=true";
