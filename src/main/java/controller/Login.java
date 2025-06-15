@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import services.UsuarioFacadeLocal;
 
 
+
 /**
  *
  * @author Jhon Deibys Torres
@@ -26,11 +27,12 @@ public class Login implements Serializable {
 
     private String usuario;
     private String contrasenna;
+    
     private Usuario user = new Usuario();
+    
     @EJB
     UsuarioFacadeLocal ufl;
-    
-    
+
     public Login(String usuario, String contrasenna) {
         this.usuario = usuario;
         this.contrasenna = contrasenna;
@@ -53,11 +55,11 @@ public class Login implements Serializable {
     }
     
     public String iniciarSesion(){
-        user = this.ufl.iniciarSesion(usuario, contrasenna);
-        if (user.getIdUsuario() != null ) {
+       user = this.ufl.iniciarSesion(usuario, contrasenna);
+        if (user.getIdentificacion() != null ) {
             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
-            return "inicio?faces-redirect=true";
+            return "/resources/views/index.xhtml?faces-redirect=true";
         }else{
             
             FacesContext context =  FacesContext.getCurrentInstance();
