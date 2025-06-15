@@ -59,7 +59,7 @@ public class Login implements Serializable {
         if (user.getIdentificacion() != null ) {
             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
-            return "/resources/views/index.xhtml?faces-redirect=true";
+            return "/resources/views/inicio_Template.xhtml?faces-redirect=true";
         }else{
             
             FacesContext context =  FacesContext.getCurrentInstance();

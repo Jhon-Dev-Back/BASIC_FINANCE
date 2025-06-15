@@ -8,6 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css"/>
+        <h:outputStylesheet name="/css/inicioM.css"/>
         <title>Facelets Template</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
@@ -20,15 +21,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
-        
+
+
     </h:head>
 
     <h:body>
 
-        <div id="top">
-            <h2>Usuario: #{login.usuario}</h2>
-            <h:commandButton value="Cerrar Sesion"/>
-            <ui:insert name="top"></ui:insert>
+        <div id="top" class="top">
+            
+            <a>FINANZAS PERSONALES</a>
+            <a>ESTADISTICAS</a>
+            <a>SUSCRIPCIONES</a>
+            
         </div>
         <div>
             <div id="left">
