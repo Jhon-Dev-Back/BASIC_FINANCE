@@ -7,6 +7,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/suscripcion.css"/>
         <h:outputStylesheet name="/css/cssLayout.css"/>
         <h:outputStylesheet name="/css/inicioM.css"/>
         <title>Facelets Template</title>
@@ -28,7 +29,8 @@
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
             />
-       
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
     </h:head>
 
     <h:body>
@@ -38,12 +40,15 @@
                 &#9776;
             </button>
             <figure>
-                <img src="resources/images/Logo.png" />
+                <h:graphicImage library="images" name="Logo.png"/>
             </figure>
-            <a>INICIO</a>
-            <a>FINANZAS PERSONALES</a>
-            <a>ESTADISTICAS</a>
-            <a>SUSCRIPCIONES</a>
+            <a href="inicio_Template.xhtml">INICIO</a>
+            <a href="">FINANZAS PERSONALES</a>
+            <a href="">ESTADISTICAS</a>
+            <a href="suscripciones_Template.xhtml">SUSCRIPCIONES</a>
+            <button type="button" class="btn btn-primary" onclick="#">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
         </div>
 
         <div class="layout-wrapper">
@@ -52,7 +57,7 @@
                     <div class="h-100">
                         <div class="sidebar-logo">
                             <figure class="logo">
-                                <img src="resources/images/Logo.png" alt="Logo Empresa"/>
+                                 <h:graphicImage library="images" name="Logo.png"/>
                             </figure>
                             <a href="#">Basic Finance</a>
                         </div>
@@ -155,35 +160,46 @@
                 <section class="sec">
                     <ul class="navlink">
                         <label class="Lista">Productos</label>
-                        <li><a href="404.php">¿Por qué Basic Finance?</a></li>
-                        <li><a href="500.php">Aplicación Móvil</a></li>
+                        <li>
+                            <a href="404.php"
+                               >¿Poque Basic Finance?</a
+                            >
+                        </li>
+                        <li>
+                            <a href="500.php"
+                               >Aplicacion Movil</a
+                            >
+                        </li>
                     </ul>
+
                     <ul class="navlink">
                         <label class="Lista">Recursos</label>
-                        <li><a href="#">Consejos Sobre cómo Ahorrar</a></li>
-                        <li><a href="#">Artículos e información sobre el Mercado</a></li>
+                        <li><a href="#">Consejos Sobre como Ahorrar</a></li>
+                        <li><a href="#">Articulos e informacion sobre el Mercado</a></li>
                         <li><a href="#">Consejos Sobre Finanzas</a></li>
                     </ul>
+
                     <ul class="navlink">
-                        <label class="Lista">Empresa</label>
+                        <label class="Lista">Empresa </label>
                         <li><a href="#">Nuestra Historia</a></li>
                         <li><a href="#">Accesibilidad</a></li>
                         <li><a href="#">Eventos</a></li>
                         <li><a href="#">Desarrolladores</a></li>
                     </ul>
+
                     <ul class="navlink">
                         <label class="Lista">Ayuda</label>
-                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Contactanos</a></li>
                         <li><a href="#">Convenios</a></li>
                         <li><a href="#">Centro de Ayuda</a></li>
                         <li><a href="#">Servicio</a></li>
                     </ul>
-                    <ul class="navlink">
+                     <ul class="navlink">
                         <label class="Lista">Redes</label>
-                        <li><img src="resources/images/Face.svg" class="face" /><a href="https://web.facebook.com/">Facebook</a></li>
-                        <li><img src="resources/images/inst.svg" class="Inst" /><a href="https://www.instagram.com/">Instagram</a></li>
-                        <li><img src="resources/images/X.svg" class="twt" /><a href="https://x.com/">X</a></li>
-                        <li><img src="resources/images/what.svg" class="what" /><a href="https://www.whatsapp.com/?lang=es_LA">Whatsapp</a></li>
+                        <li><h:graphicImage library="images" name="Face.svg" alt="Icono" class="face" /><a href="https://web.facebook.com/">Facebook</a></li>
+                        <li><h:graphicImage library="images" name="inst.svg" alt="Icono" class="Inst" /><a href="https://www.instagram.com/">Instagram</a></li>
+                        <li><h:graphicImage library="images" name="X.svg" alt="Icono" class="twt" /><a href="https://x.com/">X</a></li>
+                        <li><h:graphicImage library="images" name="what.svg" alt="Icono" class="what" /><a href="https://www.whatsapp.com/?lang=es_LA">Whatsapp</a></li>
                     </ul>
                 </section>
             </footer>

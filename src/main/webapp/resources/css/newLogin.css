@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    text-decoration: none;
 }
 
 body {
@@ -424,13 +425,7 @@ footer .navlink a {
 }
 
 footer .navlink a:hover {
-    text-decoration: underline;
-}
-
-footer .pan img {
-    width: 150px;
-    height: auto;
-    margin-top: 20px;
+   color:   #efb810;
 }
 
 .contenido h3 {

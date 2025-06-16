@@ -41,7 +41,7 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
     String rutaSolicitud = solicitud.getRequestURI();
     String raiz = solicitud.getContextPath();
 
-    // 👉 NUEVO: permitir recursos gestionados por JSF (como CSS, JS, imágenes)
+    // permitir recursos gestionados por JSF (como CSS, JS, imágenes)
     if (rutaSolicitud.startsWith(raiz + "/javax.faces.resource/")) {
         chain.doFilter(request, response);
         return;

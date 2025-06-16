@@ -15,6 +15,7 @@ body {
     background-position: center bottom;
     background-size: cover;
     height: 100vh;
+  
 }
 
 #top{
@@ -46,6 +47,7 @@ body {
 #top a:hover{
     color: white;
     cursor: pointer;
+    text-decoration: none;
 }
 
 #top figure{
@@ -69,7 +71,7 @@ body {
 #left{
     
     background:  linear-gradient(rgb(0, 139, 139), #000d);
-    height: 100vh;
+    height: auto;
     width: 18%;
     color:white;
     display: flex;
@@ -100,6 +102,10 @@ body {
     cursor: pointer;
     text-decoration: none;
     font-family: 'Poppins', sans-serif;
+}
+
+.sidebar a:hover{
+    text-decoration: none;
 }
 
 li {
@@ -272,17 +278,22 @@ li {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 } 
+
 .left_content {
     flex-grow: 1;
     padding: 20px;
     background-color: #f3f3f3;
+    overflow-y: auto;
 }
+
+
+
 
 #bottom{
     
     display: flex;
-     background: #00474f;
-    padding: 30px;
+     background: #000;
+    padding: 10px;
     color: rgb(221, 177, 20);
    
    
@@ -306,5 +317,102 @@ li {
     text-decoration: none;
     color: white;
     list-style: none;
+    text-transform: uppercase;
 }
 
+#bottom .sec .Lista{
+    color: #efb810;
+    font-weight: 700;
+    font-size: 16px;
+}
+#bottom .sec a:hover{
+    
+    color: #efb810;
+}
+.sec{
+
+    display: flex;
+    flex-basis: 20rem;
+    flex-grow: 1;
+    justify-content: center;
+    margin: 10px 10px;  
+    
+    
+    
+}
+
+.sec .navlink{
+
+    margin-left: 20px;
+}
+.sec li{
+
+    text-decoration: none;
+    margin-top: 40px;
+    margin-left: 10px;
+}
+.navlink li a{
+
+    color: #efb810;
+    text-shadow: -10px 0 20px black;
+    text-decoration: none;
+    padding: 0px;
+}
+.navlink{
+
+    position: relative;
+    margin: 20px 0 10px 0;
+    padding: 20px;
+    list-style: none;
+
+}
+.sec li{
+
+    padding: 0px;
+    padding-right: 0px;
+    margin-top: 20px;
+    margin-right: 10px;
+    align-items: center;
+    
+    
+
+}
+.Lista{
+
+
+    text-transform: uppercase;
+    height: 40px;
+    color: white;
+    
+}
+
+
+.navlink a:hover{
+
+    color:white;
+}
+.navlink img{
+
+    cursor: pointer;
+}
+.navlink img:hover{
+
+    transform: translateY(-10%);
+
+}
+.navlink  .face:hover{
+
+    filter: invert(41%) sepia(27%) saturate(4360%) hue-rotate(184deg) brightness(104%) contrast(98%);
+}
+.navlink  .Inst:hover{
+
+    filter: invert(24%) sepia(90%) saturate(7467%) hue-rotate(357deg) brightness(112%) contrast(93%);
+}
+.navlink  .twt:hover{
+
+    filter: invert(41%) sepia(27%) saturate(4360%) hue-rotate(184deg) brightness(104%) contrast(98%);
+}
+.navlink  .what:hover{
+
+    filter: invert(39%) sepia(66%) saturate(1771%) hue-rotate(91deg) brightness(93%) contrast(105%);
+}
