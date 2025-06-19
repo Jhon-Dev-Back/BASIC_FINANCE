@@ -48,7 +48,7 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
     }
 
     boolean validarSesion = ((sesion != null)  && (sesion.getAttribute("usuario") != null) );
-    boolean validarRutaLogin = (rutaSolicitud.equals(raiz + "/") || (rutaSolicitud.equals(raiz + "/newLogin.xhtml")) ||rutaSolicitud.equals(raiz + "/registro.xhtml") || rutaSolicitud.equals("/registro.xhtml" + "/newLogin.xhtml") || (rutaSolicitud.equals(raiz + "/TemplateGeneral.xhtml")));
+    boolean validarRutaLogin = (rutaSolicitud.equals(raiz + "/") || (rutaSolicitud.equals(raiz + "/newLogin.xhtml")) ||rutaSolicitud.equals(raiz + "/registro.xhtml") || rutaSolicitud.equals("/registro.xhtml" + "/newLogin.xhtml"));
     boolean esRecursoEstatico = rutaSolicitud.matches(raiz + "/resources/.*\\.(css|js|png|jpg|jpeg|gif|woff|woff2|ttf)$");
     
 

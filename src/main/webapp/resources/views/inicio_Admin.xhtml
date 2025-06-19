@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./admin_Template.xhtml">
+
+            <ui:define name="content">
+
+
+                <table border="1"  id="t-all" class="jsf-data-table display nowrap" width="100%"  >
+
+                    <thead>
+                        <tr><th><h:form><h:commandButton action="#{usuariosController.crearUsuarioPartOne()}"  value="Crear Usuarios" /></h:form></th></tr>
+                        <tr>
+                            <th>Rol ID</th>
+                            <th>Usuario ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Identificacion</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Direccion</th>
+                            <th>Edad</th>
+                            <th>Contraseña</th>
+                            <th>Pais</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{usuariosController.listarUsuarios()}"  var="user">
+                            <tr>
+                                <td>#{user.usuarioPK.rolIdrol}</td>
+                                <td>#{user.usuarioPK.idusuario}</td>
+                                <td>#{user.nombres}</td>
+                                <td>#{user.apellidos}</td>
+                                <td>#{user.identificacion}</td>
+                                <td>#{user.correo}</td>
+                                <td>#{user.telefono}</td>
+                                <td>#{user.direccion}</td>
+                                <td>#{user.edad}</td>
+                                <td>#{user.contraseña}</td>
+                                <td>#{user.pais.nombrePais}</td>
+                                <td>
+                                    <h:form >
+                                        <h:commandButton value="Editar"  action="#{usuariosController.editarUserOne(user)}"/> 
+                                        <h:commandButton value="Eliminar" onclick="return confirm ('¿Desea Eliminar el Registro?')"  action="#{usuariosController.Eliminar(user)}"/>                                    
+                                    </h:form>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+
+                <script>
+                    $(document).ready(function () {
+                        $('.jsf-data-table').DataTable({
+                            dom: 'Bfrtip',
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                            },
+                            "pageLength": 50,
+                            buttons: [
+                                'copy', 'csv', 'excel', 'pdf', 'print'
+                            ]
+                        });
+
+                    });
+                </script>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

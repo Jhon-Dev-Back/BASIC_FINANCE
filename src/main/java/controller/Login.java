@@ -5,13 +5,11 @@
 package controller;
 
 import entities.Usuario;
-import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import services.UsuarioFacadeLocal;
@@ -29,7 +27,9 @@ public class Login implements Serializable {
 
     private String usuario;
     private String contrasenna;
-    
+  
+
+   
     private Usuario user = new Usuario();
     
     @EJB
@@ -58,12 +58,16 @@ public class Login implements Serializable {
     
     public String iniciarSesion(){
        user = this.ufl.iniciarSesion(usuario, contrasenna);
-        if (user.getIdentificacion() != null ) {
+        if (user.getIdentificacion() != null && user.getUsuarioPK().getRolIdrol() == 1) {
             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
+            return "/resources/views/inicio_Admin.xhtml?faces-redirect=true";
+        }else if(user.getIdentificacion() != null && user.getUsuarioPK().getRolIdrol() == 2){
+             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+            sesion.setAttribute("usuario", usuario);
             return "/resources/views/inicio_Template.xhtml?faces-redirect=true";
-        }else{
-            
+        }
+        else{
             FacesContext context =  FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o contraseña invalidos", "MSG_ERROR");
             context.addMessage(null, fm);
@@ -74,4 +78,9 @@ public class Login implements Serializable {
     public Login() {
     }
     
+   public String cerrarSesion(){
+       
+       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+       return "/newLogin.xhtml?faces-redirect=true";
+   }
 }

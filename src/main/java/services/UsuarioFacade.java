@@ -35,6 +35,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         query.setParameter("nombres", name);
         query.setParameter("password", password);
         
+        
         try {
             return (Usuario) query.getSingleResult();
         } catch (Exception e) {

@@ -1,0 +1,51 @@
+.left_content{
+    
+    display: flex;
+    justify-content: center;
+     height: 100%;
+     overflow-y: scroll;
+}
+#forms{
+    
+    width: 600px;
+    background: blue;
+    border-radius: 8px;
+    padding: 30px;
+    height: 770px;
+    margin-top: 40px
+     
+}
+
+.table_admin{
+    
+    width: 100%;
+     border-radius: 8px;
+     padding: 20px;
+}
+
+.table_admin thead tr th{
+    
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+}
+
+.table_admin tr{
+    margin: 20px 10px;  
+}
+.table_admin tr td{
+    
+    color: white;
+    font-weight: 600;
+}
+
+#forms .btn{
+    
+    margin-top: 10px;
+    height: 35px;
+    font-size: 12px;
+    margin-left: 10px;
+     margin-bottom: 10px;
+     color: white;
+}
