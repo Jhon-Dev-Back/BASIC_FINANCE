@@ -75,14 +75,14 @@
                 
                 <div class="mb-3">
                     <label for="estatus" class="form-label">Estado</label>
-                    <h:selectOneMenu value="#{usuariosController.est.idestadoRol}" styleClass="form-select">
+                    <h:selectOneMenu value="#{usuariosController.est.estadoRol}" styleClass="form-select">
                         <f:selectItems value="#{usuariosController.listarEstados()}" />
                     </h:selectOneMenu>
                 </div>
 
                 <div class="mb-3">
                     <label for="estatus" class="form-label">Estatus</label>
-                    <h:selectOneMenu id="estatus" value="#{usuariosController.rol.idrol}" styleClass="form-select">
+                    <h:selectOneMenu id="estatus" value="#{usuariosController.user.rolId.idrol}" styleClass="form-select">
                         <f:selectItems value="#{usuariosController.listarRol()}"/>
                     </h:selectOneMenu>
                 </div>

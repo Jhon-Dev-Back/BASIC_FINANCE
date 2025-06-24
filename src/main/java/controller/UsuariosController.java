@@ -8,16 +8,18 @@ import entities.EstadoRol;
 import entities.Pais;
 import entities.Rol;
 import entities.Usuario;
-import entities.UsuarioPK;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import services.EstadoRolFacadeLocal;
 import services.PaisFacadeLocal;
 import services.RolFacadeLocal;
@@ -34,8 +36,7 @@ public class UsuariosController implements Serializable {
     /**
      * Creates a new instance of UsuariosController
      */
-    Usuario user =new Usuario();
-    UsuarioPK pk = new UsuarioPK();
+    Usuario user = new Usuario();
     Rol rol = new Rol();
     Pais pais = new Pais();
     EstadoRol est = new EstadoRol();
@@ -48,19 +49,10 @@ public class UsuariosController implements Serializable {
     RolFacadeLocal rfl;
     @EJB
     EstadoRolFacadeLocal erfl;
-    
 
     List<SelectItem> listaPaises;
     List<SelectItem> listarEstados;
     List<SelectItem> listarRoles;
-
-    public UsuarioPK getPk() {
-        return pk;
-    }
-
-    public void setPk(UsuarioPK pk) {
-        this.pk = pk;
-    }
 
     public EstadoRol getEst() {
         return est;
@@ -141,20 +133,20 @@ public class UsuariosController implements Serializable {
         return null;
     }
 
-    private int generarIdUsuario() {
-        List<Usuario> lista = ufl.findAll();
-        int maxId = 0;
-        for (Usuario u : lista) {
-            if (u.getUsuarioPK().getIdusuario() > maxId) {
-                maxId = u.getUsuarioPK().getIdusuario();
-            }
-        }
-        return maxId + 1;
+
+    @PostConstruct
+    public void init() {
+        user = new Usuario();
+        user.setRolId(new Rol());    // ← Esto es obligatorio
+        user.setPaisId(new Pais());  // ← Esto también
     }
 
     public String crearUsuarioPartOne() {
-   
+
         this.user = new Usuario();
+        this.user.setPaisId(new Pais());
+        this.user.setRolId(new Rol());
+        this.rol.setEstadoRolId(new EstadoRol());
         return "crear_usuarios_Admin.xhtml?faces-redirect=true";
 
     }
@@ -162,22 +154,28 @@ public class UsuariosController implements Serializable {
     public String crearUsuario() {
 
         try {
-            UsuarioPK pk = new UsuarioPK();
-            pk.setIdusuario(generarIdUsuario());
-            pk.setRolIdrol(this.rol.getIdrol());
-            pk.setPaisIdpais(this.pais.getIdpais());
-
-            this.user.setUsuarioPK(pk);
-            Pais p = pfl.find(this.pais.getIdpais());
-            this.user.setPais(p);
+            Rol rolSeleccionado = rfl.find(user.getRolId().getIdrol());
+            user.setPaisId(pfl.find(pais.getIdpais())); // pais es el objeto seleccionado en el menú
+            user.setRolId(rolSeleccionado);
             this.ufl.create(user);
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Registrado Exitosamente", "MSG_INFO");
             context.addMessage(null, fm);
 
-            return "/newLogin.xhtml?faces-redirect=true";
+            if (FacesContext.getCurrentInstance().getViewRoot().getViewId().contains("Admin")) {
+                return "inicio_Admin.xhtml?faces-redirect=true";
+            } else if (FacesContext.getCurrentInstance().getViewRoot().getViewId().contains("registro")) {
+                return "/newLogin.xhtml?faces-redirect=true";
+            }
 
+        } catch (IllegalArgumentException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        } catch (ConstraintViolationException ex) {
+            for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+                System.out.println("Error en propiedad: " + violation.getPropertyPath() + " - " + violation.getMessage());
+            }
         } catch (Exception e) {
+            e.printStackTrace(); // revisa bien esta parte en consola
         }
         return null;
     }
@@ -216,37 +214,37 @@ public class UsuariosController implements Serializable {
         return null;
     }
 
-    public String editarUserOne(Usuario u) {       
-     
+    public String editarUserOne(Usuario u) {
+
         this.user = u;
-        this.pk = this.user.getUsuarioPK();
-       return "crear_usuarios_Admin.xhtml?faces-redirect=true";
-       
+        return "crear_usuarios_Admin.xhtml?faces-redirect=true";
+
     }
-    
-    public String editarStepTwo() {       
-     
+
+    public String editarStepTwo() {
+
         try {
+            Rol rolSeleccionado = rfl.find(user.getRolId().getIdrol());
+            user.setPaisId(pfl.find(user.getPaisId().getIdpais())); // pais es el objeto seleccionado en el menú
+            user.setRolId(rolSeleccionado);
             this.ufl.edit(user);
-            
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Editado Exitosamente", "MSG_INFO");
             context.addMessage(null, fm);
         } catch (Exception e) {
         }
-       return "crear_usuarios_Admin.xhtml?faces-redirect=true";
-       
+        return "crear_usuarios_Admin.xhtml?faces-redirect=true";
+
     }
-    
-    public void Eliminar(Usuario user){
+
+    public void Eliminar(Usuario user) {
         try {
-            this.ufl.remove(user); 
+            this.ufl.remove(user);
             FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario Eliminado Exitosamente", "MSG_INFO");
             context.addMessage(null, fm);
         } catch (Exception e) {
         }
     }
-    
-    
+
 }

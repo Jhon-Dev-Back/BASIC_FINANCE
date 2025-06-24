@@ -5,7 +5,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TipoTransaccion.findAll", query = "SELECT t FROM TipoTransaccion t"),
-    @NamedQuery(name = "TipoTransaccion.findByIdTipoTransaccion", query = "SELECT t FROM TipoTransaccion t WHERE t.idTipoTransaccion = :idTipoTransaccion"),
+    @NamedQuery(name = "TipoTransaccion.findByIdtipoTransaccion", query = "SELECT t FROM TipoTransaccion t WHERE t.idtipoTransaccion = :idtipoTransaccion"),
     @NamedQuery(name = "TipoTransaccion.findByEstadoTransaccion", query = "SELECT t FROM TipoTransaccion t WHERE t.estadoTransaccion = :estadoTransaccion")})
 public class TipoTransaccion implements Serializable {
 
@@ -35,32 +39,34 @@ public class TipoTransaccion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idTipo_Transaccion")
-    private Integer idTipoTransaccion;
+    @Column(name = "idtipo_transaccion")
+    private Integer idtipoTransaccion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "estado_transaccion")
     private String estadoTransaccion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoTransaccionId")
+    private Collection<Transaccion> transaccionCollection;
 
     public TipoTransaccion() {
     }
 
-    public TipoTransaccion(Integer idTipoTransaccion) {
-        this.idTipoTransaccion = idTipoTransaccion;
+    public TipoTransaccion(Integer idtipoTransaccion) {
+        this.idtipoTransaccion = idtipoTransaccion;
     }
 
-    public TipoTransaccion(Integer idTipoTransaccion, String estadoTransaccion) {
-        this.idTipoTransaccion = idTipoTransaccion;
+    public TipoTransaccion(Integer idtipoTransaccion, String estadoTransaccion) {
+        this.idtipoTransaccion = idtipoTransaccion;
         this.estadoTransaccion = estadoTransaccion;
     }
 
-    public Integer getIdTipoTransaccion() {
-        return idTipoTransaccion;
+    public Integer getIdtipoTransaccion() {
+        return idtipoTransaccion;
     }
 
-    public void setIdTipoTransaccion(Integer idTipoTransaccion) {
-        this.idTipoTransaccion = idTipoTransaccion;
+    public void setIdtipoTransaccion(Integer idtipoTransaccion) {
+        this.idtipoTransaccion = idtipoTransaccion;
     }
 
     public String getEstadoTransaccion() {
@@ -71,10 +77,19 @@ public class TipoTransaccion implements Serializable {
         this.estadoTransaccion = estadoTransaccion;
     }
 
+    @XmlTransient
+    public Collection<Transaccion> getTransaccionCollection() {
+        return transaccionCollection;
+    }
+
+    public void setTransaccionCollection(Collection<Transaccion> transaccionCollection) {
+        this.transaccionCollection = transaccionCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idTipoTransaccion != null ? idTipoTransaccion.hashCode() : 0);
+        hash += (idtipoTransaccion != null ? idtipoTransaccion.hashCode() : 0);
         return hash;
     }
 
@@ -85,7 +100,7 @@ public class TipoTransaccion implements Serializable {
             return false;
         }
         TipoTransaccion other = (TipoTransaccion) object;
-        if ((this.idTipoTransaccion == null && other.idTipoTransaccion != null) || (this.idTipoTransaccion != null && !this.idTipoTransaccion.equals(other.idTipoTransaccion))) {
+        if ((this.idtipoTransaccion == null && other.idtipoTransaccion != null) || (this.idtipoTransaccion != null && !this.idtipoTransaccion.equals(other.idtipoTransaccion))) {
             return false;
         }
         return true;
@@ -93,7 +108,7 @@ public class TipoTransaccion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.TipoTransaccion[ idTipoTransaccion=" + idTipoTransaccion + " ]";
+        return "entities.TipoTransaccion[ idtipoTransaccion=" + idtipoTransaccion + " ]";
     }
     
 }

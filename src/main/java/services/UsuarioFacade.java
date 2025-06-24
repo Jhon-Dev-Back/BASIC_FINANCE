@@ -30,10 +30,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
 
     @Override
-    public Usuario iniciarSesion(String name, String password) {
-        Query query = em.createQuery("SELECT U FROM Usuario U WHERE U.nombres=:nombres AND U.contraseña=:password");
-        query.setParameter("nombres", name);
-        query.setParameter("password", password);
+    public Usuario iniciarSesion(String nombres, String contrasenna) {
+       Query query = em.createQuery("SELECT U FROM Usuario U WHERE U.nombres=:nombres AND U.contraseña=:password");
+        query.setParameter("nombres", nombres);
+        query.setParameter("password", contrasenna);
         
         
         try {

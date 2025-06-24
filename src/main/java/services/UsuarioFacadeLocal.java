@@ -29,6 +29,6 @@ public interface UsuarioFacadeLocal {
 
     int count();
     
-    Usuario iniciarSesion(String nombres, String contraseña);
+    Usuario iniciarSesion(String nombres, String contrasenna);
     
 }

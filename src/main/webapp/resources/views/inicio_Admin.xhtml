@@ -27,14 +27,15 @@
                             <th>Edad</th>
                             <th>Contraseña</th>
                             <th>Pais</th>
+                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <ui:repeat value="#{usuariosController.listarUsuarios()}"  var="user">
                             <tr>
-                                <td>#{user.usuarioPK.rolIdrol}</td>
-                                <td>#{user.usuarioPK.idusuario}</td>
+                                <td>#{user.rolId.nombreRol}</td>
+                                <td>#{user.idusuario}</td>
                                 <td>#{user.nombres}</td>
                                 <td>#{user.apellidos}</td>
                                 <td>#{user.identificacion}</td>
@@ -43,7 +44,8 @@
                                 <td>#{user.direccion}</td>
                                 <td>#{user.edad}</td>
                                 <td>#{user.contraseña}</td>
-                                <td>#{user.pais.nombrePais}</td>
+                                <td>#{user.paisId.nombrePais}</td>
+                                 <td>#{user.rolId.estadoRolId.estadoRol}</td>
                                 <td>
                                     <h:form >
                                         <h:commandButton value="Editar"  action="#{usuariosController.editarUserOne(user)}"/> 

@@ -247,7 +247,7 @@ header .navlinks {
     left: -50%;
     width: 500px;
     height: 600px;
-    background: linear-gradient(0deg, transparent,transparent, #8B0000, #8B0000, #8B0000);
+    background: linear-gradient(0deg, transparent,transparent, #0d22c6, #0d22c6, #0d22c6);
     transform-origin: bottom right;
     z-index: 1;
     animation: animate 6s linear infinite;
@@ -261,7 +261,7 @@ header .navlinks {
     left: -50%;
     width: 500px;
     height: 600px;
-    background: linear-gradient(0deg, transparent,transparent, #8B0000, #8B0000, #8B0000);
+    background: linear-gradient(0deg, transparent,transparent, #0d22c6, #0d22c6, #0d22c6);
     transform-origin: bottom right;
     z-index: 1;
     animation: animate 6s linear infinite;

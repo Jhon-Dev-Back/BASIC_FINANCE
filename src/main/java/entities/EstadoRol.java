@@ -46,7 +46,7 @@ public class EstadoRol implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "estado_rol")
     private String estadoRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoRolIdestadoRol")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoRolId")
     private Collection<Rol> rolCollection;
 
     public EstadoRol() {

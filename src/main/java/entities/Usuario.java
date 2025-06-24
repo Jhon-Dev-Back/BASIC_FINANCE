@@ -5,18 +5,24 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,22 +33,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.usuarioPK.idusuario = :idusuario"),
+    @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
     @NamedQuery(name = "Usuario.findByNombres", query = "SELECT u FROM Usuario u WHERE u.nombres = :nombres"),
     @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos"),
     @NamedQuery(name = "Usuario.findByIdentificacion", query = "SELECT u FROM Usuario u WHERE u.identificacion = :identificacion"),
     @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
     @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono"),
     @NamedQuery(name = "Usuario.findByDireccion", query = "SELECT u FROM Usuario u WHERE u.direccion = :direccion"),
-    @NamedQuery(name = "Usuario.findByPaisIdpais", query = "SELECT u FROM Usuario u WHERE u.usuarioPK.paisIdpais = :paisIdpais"),
-    @NamedQuery(name = "Usuario.findByRolIdrol", query = "SELECT u FROM Usuario u WHERE u.usuarioPK.rolIdrol = :rolIdrol"),
     @NamedQuery(name = "Usuario.findByEdad", query = "SELECT u FROM Usuario u WHERE u.edad = :edad"),
     @NamedQuery(name = "Usuario.findByContrase\u00f1a", query = "SELECT u FROM Usuario u WHERE u.contrase\u00f1a = :contrase\u00f1a")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected UsuarioPK usuarioPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idusuario")
+    private Integer idusuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
@@ -80,19 +87,28 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "contrase\u00f1a")
     private String contraseña;
-    @JoinColumn(name = "pais_idpais", referencedColumnName = "idpais", insertable = false, updatable = false)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
+    private Collection<Suscripcion> suscripcionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
+    private Collection<RolHasUsuario> rolHasUsuarioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioId")
+    private Collection<Reporte> reporteCollection;
+    @JoinColumn(name = "pais_id", referencedColumnName = "idpais")
     @ManyToOne(optional = false)
-    private Pais pais;
+    private Pais paisId;
+    @JoinColumn(name = "rol_id", referencedColumnName = "idrol")
+    @ManyToOne(optional = false)
+    private Rol rolId;
 
     public Usuario() {
     }
 
-    public Usuario(UsuarioPK usuarioPK) {
-        this.usuarioPK = usuarioPK;
+    public Usuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
-    public Usuario(UsuarioPK usuarioPK, String nombres, String apellidos, String identificacion, String correo, String telefono, String direccion, String contraseña) {
-        this.usuarioPK = usuarioPK;
+    public Usuario(Integer idusuario, String nombres, String apellidos, String identificacion, String correo, String telefono, String direccion, String contraseña) {
+        this.idusuario = idusuario;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.identificacion = identificacion;
@@ -102,16 +118,12 @@ public class Usuario implements Serializable {
         this.contraseña = contraseña;
     }
 
-    public Usuario(int idusuario, int paisIdpais, int rolIdrol) {
-        this.usuarioPK = new UsuarioPK(idusuario, paisIdpais, rolIdrol);
+    public Integer getIdusuario() {
+        return idusuario;
     }
 
-    public UsuarioPK getUsuarioPK() {
-        return usuarioPK;
-    }
-
-    public void setUsuarioPK(UsuarioPK usuarioPK) {
-        this.usuarioPK = usuarioPK;
+    public void setIdusuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
     public String getNombres() {
@@ -178,18 +190,53 @@ public class Usuario implements Serializable {
         this.contraseña = contraseña;
     }
 
-    public Pais getPais() {
-        return pais;
+    @XmlTransient
+    public Collection<Suscripcion> getSuscripcionCollection() {
+        return suscripcionCollection;
     }
 
-    public void setPais(Pais pais) {
-        this.pais = pais;
+    public void setSuscripcionCollection(Collection<Suscripcion> suscripcionCollection) {
+        this.suscripcionCollection = suscripcionCollection;
+    }
+
+    @XmlTransient
+    public Collection<RolHasUsuario> getRolHasUsuarioCollection() {
+        return rolHasUsuarioCollection;
+    }
+
+    public void setRolHasUsuarioCollection(Collection<RolHasUsuario> rolHasUsuarioCollection) {
+        this.rolHasUsuarioCollection = rolHasUsuarioCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reporte> getReporteCollection() {
+        return reporteCollection;
+    }
+
+    public void setReporteCollection(Collection<Reporte> reporteCollection) {
+        this.reporteCollection = reporteCollection;
+    }
+
+    public Pais getPaisId() {
+        return paisId;
+    }
+
+    public void setPaisId(Pais paisId) {
+        this.paisId = paisId;
+    }
+
+    public Rol getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Rol rolId) {
+        this.rolId = rolId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (usuarioPK != null ? usuarioPK.hashCode() : 0);
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
         return hash;
     }
 
@@ -200,7 +247,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.usuarioPK == null && other.usuarioPK != null) || (this.usuarioPK != null && !this.usuarioPK.equals(other.usuarioPK))) {
+        if ((this.idusuario == null && other.idusuario != null) || (this.idusuario != null && !this.idusuario.equals(other.idusuario))) {
             return false;
         }
         return true;
@@ -208,11 +255,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Usuario[ usuarioPK=" + usuarioPK + " ]";
-    }
-
-    public void setUsuarioPK(Rol rol) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "entities.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }

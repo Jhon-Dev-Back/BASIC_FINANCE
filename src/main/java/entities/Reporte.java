@@ -8,9 +8,13 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,19 +33,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reporte.findAll", query = "SELECT r FROM Reporte r"),
-    @NamedQuery(name = "Reporte.findByIdreporte", query = "SELECT r FROM Reporte r WHERE r.reportePK.idreporte = :idreporte"),
+    @NamedQuery(name = "Reporte.findByIdreporte", query = "SELECT r FROM Reporte r WHERE r.idreporte = :idreporte"),
     @NamedQuery(name = "Reporte.findByMonto", query = "SELECT r FROM Reporte r WHERE r.monto = :monto"),
-    @NamedQuery(name = "Reporte.findByFecha", query = "SELECT r FROM Reporte r WHERE r.fecha = :fecha"),
-    @NamedQuery(name = "Reporte.findByTipoReporteIdtipoReporte", query = "SELECT r FROM Reporte r WHERE r.reportePK.tipoReporteIdtipoReporte = :tipoReporteIdtipoReporte"),
-    @NamedQuery(name = "Reporte.findByUsuarioIdusuario", query = "SELECT r FROM Reporte r WHERE r.reportePK.usuarioIdusuario = :usuarioIdusuario"),
-    @NamedQuery(name = "Reporte.findByUsuarioPaisIdpais", query = "SELECT r FROM Reporte r WHERE r.reportePK.usuarioPaisIdpais = :usuarioPaisIdpais"),
-    @NamedQuery(name = "Reporte.findByUsuarioRolIdrol", query = "SELECT r FROM Reporte r WHERE r.reportePK.usuarioRolIdrol = :usuarioRolIdrol"),
-    @NamedQuery(name = "Reporte.findByPeriodoIdperiodo", query = "SELECT r FROM Reporte r WHERE r.reportePK.periodoIdperiodo = :periodoIdperiodo")})
+    @NamedQuery(name = "Reporte.findByFecha", query = "SELECT r FROM Reporte r WHERE r.fecha = :fecha")})
 public class Reporte implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ReportePK reportePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idreporte")
+    private Integer idreporte;
     @Basic(optional = false)
     @NotNull
     @Column(name = "monto")
@@ -57,31 +59,36 @@ public class Reporte implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
+    @JoinColumn(name = "tipo_reporte_id", referencedColumnName = "idtipo_reporte")
+    @ManyToOne(optional = false)
+    private TipoReporte tipoReporteId;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario usuarioId;
+    @JoinColumn(name = "periodo_id", referencedColumnName = "idperiodo")
+    @ManyToOne(optional = false)
+    private Periodo periodoId;
 
     public Reporte() {
     }
 
-    public Reporte(ReportePK reportePK) {
-        this.reportePK = reportePK;
+    public Reporte(Integer idreporte) {
+        this.idreporte = idreporte;
     }
 
-    public Reporte(ReportePK reportePK, long monto, Date fecha, String descripcion) {
-        this.reportePK = reportePK;
+    public Reporte(Integer idreporte, long monto, Date fecha, String descripcion) {
+        this.idreporte = idreporte;
         this.monto = monto;
         this.fecha = fecha;
         this.descripcion = descripcion;
     }
 
-    public Reporte(int idreporte, int tipoReporteIdtipoReporte, int usuarioIdusuario, int usuarioPaisIdpais, int usuarioRolIdrol, int periodoIdperiodo) {
-        this.reportePK = new ReportePK(idreporte, tipoReporteIdtipoReporte, usuarioIdusuario, usuarioPaisIdpais, usuarioRolIdrol, periodoIdperiodo);
+    public Integer getIdreporte() {
+        return idreporte;
     }
 
-    public ReportePK getReportePK() {
-        return reportePK;
-    }
-
-    public void setReportePK(ReportePK reportePK) {
-        this.reportePK = reportePK;
+    public void setIdreporte(Integer idreporte) {
+        this.idreporte = idreporte;
     }
 
     public long getMonto() {
@@ -108,10 +115,34 @@ public class Reporte implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public TipoReporte getTipoReporteId() {
+        return tipoReporteId;
+    }
+
+    public void setTipoReporteId(TipoReporte tipoReporteId) {
+        this.tipoReporteId = tipoReporteId;
+    }
+
+    public Usuario getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Usuario usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Periodo getPeriodoId() {
+        return periodoId;
+    }
+
+    public void setPeriodoId(Periodo periodoId) {
+        this.periodoId = periodoId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (reportePK != null ? reportePK.hashCode() : 0);
+        hash += (idreporte != null ? idreporte.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +153,7 @@ public class Reporte implements Serializable {
             return false;
         }
         Reporte other = (Reporte) object;
-        if ((this.reportePK == null && other.reportePK != null) || (this.reportePK != null && !this.reportePK.equals(other.reportePK))) {
+        if ((this.idreporte == null && other.idreporte != null) || (this.idreporte != null && !this.idreporte.equals(other.idreporte))) {
             return false;
         }
         return true;
@@ -130,7 +161,7 @@ public class Reporte implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Reporte[ reportePK=" + reportePK + " ]";
+        return "entities.Reporte[ idreporte=" + idreporte + " ]";
     }
     
 }

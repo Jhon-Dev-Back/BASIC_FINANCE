@@ -5,7 +5,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MetodoDePago.findAll", query = "SELECT m FROM MetodoDePago m"),
-    @NamedQuery(name = "MetodoDePago.findByIdmetododePago", query = "SELECT m FROM MetodoDePago m WHERE m.idmetododePago = :idmetododePago"),
+    @NamedQuery(name = "MetodoDePago.findByIdmetodoDePago", query = "SELECT m FROM MetodoDePago m WHERE m.idmetodoDePago = :idmetodoDePago"),
     @NamedQuery(name = "MetodoDePago.findByNombrePago", query = "SELECT m FROM MetodoDePago m WHERE m.nombrePago = :nombrePago")})
 public class MetodoDePago implements Serializable {
 
@@ -35,32 +39,34 @@ public class MetodoDePago implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idmetodo_de_Pago")
-    private Integer idmetododePago;
+    @Column(name = "idmetodo_de_pago")
+    private Integer idmetodoDePago;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
     @Column(name = "nombre_pago")
     private String nombrePago;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "metodoDePagoId")
+    private Collection<Transaccion> transaccionCollection;
 
     public MetodoDePago() {
     }
 
-    public MetodoDePago(Integer idmetododePago) {
-        this.idmetododePago = idmetododePago;
+    public MetodoDePago(Integer idmetodoDePago) {
+        this.idmetodoDePago = idmetodoDePago;
     }
 
-    public MetodoDePago(Integer idmetododePago, String nombrePago) {
-        this.idmetododePago = idmetododePago;
+    public MetodoDePago(Integer idmetodoDePago, String nombrePago) {
+        this.idmetodoDePago = idmetodoDePago;
         this.nombrePago = nombrePago;
     }
 
-    public Integer getIdmetododePago() {
-        return idmetododePago;
+    public Integer getIdmetodoDePago() {
+        return idmetodoDePago;
     }
 
-    public void setIdmetododePago(Integer idmetododePago) {
-        this.idmetododePago = idmetododePago;
+    public void setIdmetodoDePago(Integer idmetodoDePago) {
+        this.idmetodoDePago = idmetodoDePago;
     }
 
     public String getNombrePago() {
@@ -71,10 +77,19 @@ public class MetodoDePago implements Serializable {
         this.nombrePago = nombrePago;
     }
 
+    @XmlTransient
+    public Collection<Transaccion> getTransaccionCollection() {
+        return transaccionCollection;
+    }
+
+    public void setTransaccionCollection(Collection<Transaccion> transaccionCollection) {
+        this.transaccionCollection = transaccionCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idmetododePago != null ? idmetododePago.hashCode() : 0);
+        hash += (idmetodoDePago != null ? idmetodoDePago.hashCode() : 0);
         return hash;
     }
 
@@ -85,7 +100,7 @@ public class MetodoDePago implements Serializable {
             return false;
         }
         MetodoDePago other = (MetodoDePago) object;
-        if ((this.idmetododePago == null && other.idmetododePago != null) || (this.idmetododePago != null && !this.idmetododePago.equals(other.idmetododePago))) {
+        if ((this.idmetodoDePago == null && other.idmetodoDePago != null) || (this.idmetodoDePago != null && !this.idmetodoDePago.equals(other.idmetodoDePago))) {
             return false;
         }
         return true;
@@ -93,7 +108,7 @@ public class MetodoDePago implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.MetodoDePago[ idmetododePago=" + idmetododePago + " ]";
+        return "entities.MetodoDePago[ idmetodoDePago=" + idmetodoDePago + " ]";
     }
     
 }

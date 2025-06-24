@@ -5,7 +5,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,9 +48,13 @@ public class Rol implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombre_rol")
     private String nombreRol;
-    @JoinColumn(name = "estado_rol_idestado_rol", referencedColumnName = "idestado_rol")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolId")
+    private Collection<RolHasUsuario> rolHasUsuarioCollection;
+    @JoinColumn(name = "estado_rol_id", referencedColumnName = "idestado_rol")
     @ManyToOne(optional = false)
-    private EstadoRol estadoRolIdestadoRol;
+    private EstadoRol estadoRolId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolId")
+    private Collection<Usuario> usuarioCollection;
 
     public Rol() {
     }
@@ -76,12 +84,30 @@ public class Rol implements Serializable {
         this.nombreRol = nombreRol;
     }
 
-    public EstadoRol getEstadoRolIdestadoRol() {
-        return estadoRolIdestadoRol;
+    @XmlTransient
+    public Collection<RolHasUsuario> getRolHasUsuarioCollection() {
+        return rolHasUsuarioCollection;
     }
 
-    public void setEstadoRolIdestadoRol(EstadoRol estadoRolIdestadoRol) {
-        this.estadoRolIdestadoRol = estadoRolIdestadoRol;
+    public void setRolHasUsuarioCollection(Collection<RolHasUsuario> rolHasUsuarioCollection) {
+        this.rolHasUsuarioCollection = rolHasUsuarioCollection;
+    }
+
+    public EstadoRol getEstadoRolId() {
+        return estadoRolId;
+    }
+
+    public void setEstadoRolId(EstadoRol estadoRolId) {
+        this.estadoRolId = estadoRolId;
+    }
+
+    @XmlTransient
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
+    }
+
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @Override

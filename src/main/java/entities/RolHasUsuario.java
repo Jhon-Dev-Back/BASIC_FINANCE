@@ -5,8 +5,14 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,39 +27,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolHasUsuario.findAll", query = "SELECT r FROM RolHasUsuario r"),
-    @NamedQuery(name = "RolHasUsuario.findByRolIdrol", query = "SELECT r FROM RolHasUsuario r WHERE r.rolHasUsuarioPK.rolIdrol = :rolIdrol"),
-    @NamedQuery(name = "RolHasUsuario.findByUsuarioIdusuario", query = "SELECT r FROM RolHasUsuario r WHERE r.rolHasUsuarioPK.usuarioIdusuario = :usuarioIdusuario"),
-    @NamedQuery(name = "RolHasUsuario.findByUsuarioPaisIdpais", query = "SELECT r FROM RolHasUsuario r WHERE r.rolHasUsuarioPK.usuarioPaisIdpais = :usuarioPaisIdpais"),
-    @NamedQuery(name = "RolHasUsuario.findByUsuarioRolIdrol", query = "SELECT r FROM RolHasUsuario r WHERE r.rolHasUsuarioPK.usuarioRolIdrol = :usuarioRolIdrol")})
+    @NamedQuery(name = "RolHasUsuario.findById", query = "SELECT r FROM RolHasUsuario r WHERE r.id = :id")})
 public class RolHasUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected RolHasUsuarioPK rolHasUsuarioPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario usuarioId;
+    @JoinColumn(name = "rol_id", referencedColumnName = "idrol")
+    @ManyToOne(optional = false)
+    private Rol rolId;
 
     public RolHasUsuario() {
     }
 
-    public RolHasUsuario(RolHasUsuarioPK rolHasUsuarioPK) {
-        this.rolHasUsuarioPK = rolHasUsuarioPK;
+    public RolHasUsuario(Integer id) {
+        this.id = id;
     }
 
-    public RolHasUsuario(int rolIdrol, int usuarioIdusuario, int usuarioPaisIdpais, int usuarioRolIdrol) {
-        this.rolHasUsuarioPK = new RolHasUsuarioPK(rolIdrol, usuarioIdusuario, usuarioPaisIdpais, usuarioRolIdrol);
+    public Integer getId() {
+        return id;
     }
 
-    public RolHasUsuarioPK getRolHasUsuarioPK() {
-        return rolHasUsuarioPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setRolHasUsuarioPK(RolHasUsuarioPK rolHasUsuarioPK) {
-        this.rolHasUsuarioPK = rolHasUsuarioPK;
+    public Usuario getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Usuario usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Rol getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Rol rolId) {
+        this.rolId = rolId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rolHasUsuarioPK != null ? rolHasUsuarioPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -64,7 +88,7 @@ public class RolHasUsuario implements Serializable {
             return false;
         }
         RolHasUsuario other = (RolHasUsuario) object;
-        if ((this.rolHasUsuarioPK == null && other.rolHasUsuarioPK != null) || (this.rolHasUsuarioPK != null && !this.rolHasUsuarioPK.equals(other.rolHasUsuarioPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -72,7 +96,7 @@ public class RolHasUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.RolHasUsuario[ rolHasUsuarioPK=" + rolHasUsuarioPK + " ]";
+        return "entities.RolHasUsuario[ id=" + id + " ]";
     }
     
 }

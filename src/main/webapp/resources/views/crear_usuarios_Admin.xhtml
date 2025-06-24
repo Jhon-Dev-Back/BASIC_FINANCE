@@ -21,8 +21,6 @@
 
                             </thead>
                             <tbody>
-                                <tr><td>ID USUARIO</td></tr>
-                                <tr> <td><h:inputText  id="ID" disabled="#{usuariosController.user.identificacion != null}" value="#{usuariosController.user.usuarioPK.idusuario}" required="true" styleClass="form-control"  /></td></tr>
                                 <tr><td>NOMBRES</td></tr>
                                 <tr> <td><h:inputText  id="Nombres" value="#{usuariosController.user.nombres}" required="true" styleClass="form-control"  /></td></tr>
                                 <tr><td>APELLIDOS</td></tr>
@@ -35,23 +33,28 @@
                                 <tr> <td><h:inputText  id="Telefono" value="#{usuariosController.user.telefono}"  required="true" styleClass="form-control"  /></td></tr>
                                 <tr> <td>DIRECCION</td></tr>
                                 <tr><td><h:inputText  id="Direccion"  value="#{usuariosController.user.direccion}" required="true" styleClass="form-control"  /></td></tr>
+                                <tr> <td>CONTRASEÑA</td></tr>
+                                <tr><td><h:inputText  id="Contraseña"  value="#{usuariosController.user.contraseña}" required="true" styleClass="form-control"  /></td></tr>
                                 <tr> <td>EDAD</td></tr>
                                 <tr><td><h:inputText  id="Edad" value="#{usuariosController.user.edad}" required="true"  styleClass="form-control"  /></td></tr>
-
+                                <tr> <td>ESTADO</td></tr>
+                                <tr><td><h:selectOneMenu value="#{usuariosController.est.estadoRol}" styleClass="form-select">
+                                    <f:selectItems value="#{usuariosController.listarEstados()}" />
+                                        </h:selectOneMenu></td></tr>
                                 <tr> <td>PAIS</td></tr>
-                                <tr><td><h:selectOneMenu disabled="#{usuariosController.user.identificacion != null}" value="#{usuariosController.pk.paisIdpais}" id="Pais" styleClass="form-select">
+                                <tr><td><h:selectOneMenu value="#{usuariosController.user.paisId.idpais}" id="Pais" styleClass="form-select">
                                             <f:selectItems value="#{usuariosController.listarPaises()}" />
                                         </h:selectOneMenu></td></tr>
                                 <tr> <td>ROL ID</td></tr>
-                                <tr> <td><h:selectOneMenu disabled="#{usuariosController.user.identificacion != null}" id="Rol" value="#{usuariosController.pk.rolIdrol}" styleClass="form-select">
+                                <tr> <td><h:selectOneMenu id="Rol" value="#{usuariosController.user.rolId.idrol}" styleClass="form-select">
                                             <f:selectItems value="#{usuariosController.listarRolAdmin()}" />
                                         </h:selectOneMenu></td></tr>
                                 <tr><td>
                                         <h:messages id="mensajes" infoClass="color: red;" globalOnly="true"   />    
                                         <h:commandButton value="REGISTRAR"  action="#{usuariosController.crearUsuario()}"  rendered="#{usuariosController.user.identificacion == null}" class="btn btn-primary" />
-                                        <h:commandButton value="EDITAR"  action="#{usuariosController.editarStepTwo()}"  rendered="#{usuariosController.user.identificacion != null}" class="btn btn-primary" />
+                                        <h:commandButton value="EDITAR"  action="#{usuariosController.editarStepTwo()}" onclick="return confirm ('¿Esta Seguro de  Editar este Usuario?')"  rendered="#{usuariosController.user.identificacion != null}" class="btn btn-primary" />
                                         <h:commandButton value="CANCELAR"  action="#" class="btn btn-primary"   type="reset"/></td></tr>
-                                
+
                             </tbody>
                         </table>
 

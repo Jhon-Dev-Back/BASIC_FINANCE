@@ -9,9 +9,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,22 +34,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Transaccion.findAll", query = "SELECT t FROM Transaccion t"),
-    @NamedQuery(name = "Transaccion.findByIdTransaccion", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.idTransaccion = :idTransaccion"),
+    @NamedQuery(name = "Transaccion.findByIdtransaccion", query = "SELECT t FROM Transaccion t WHERE t.idtransaccion = :idtransaccion"),
     @NamedQuery(name = "Transaccion.findByMonto", query = "SELECT t FROM Transaccion t WHERE t.monto = :monto"),
-    @NamedQuery(name = "Transaccion.findByFecha", query = "SELECT t FROM Transaccion t WHERE t.fecha = :fecha"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionIdestadoSuscripcion", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionIdestadoSuscripcion = :suscripcionIdestadoSuscripcion"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionUsuarioIdusuario", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionUsuarioIdusuario = :suscripcionUsuarioIdusuario"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionUsuarioPaisIdpais", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionUsuarioPaisIdpais = :suscripcionUsuarioPaisIdpais"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionUsuarioRolIdrol", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionUsuarioRolIdrol = :suscripcionUsuarioRolIdrol"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionPlanSuscripcionIdplanSuscripcion", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionPlanSuscripcionIdplanSuscripcion = :suscripcionPlanSuscripcionIdplanSuscripcion"),
-    @NamedQuery(name = "Transaccion.findBySuscripcionEstadoSuscripcionIdestadoSuscripcion", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.suscripcionEstadoSuscripcionIdestadoSuscripcion = :suscripcionEstadoSuscripcionIdestadoSuscripcion"),
-    @NamedQuery(name = "Transaccion.findByTipoTransaccionidTipoTransaccion", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.tipoTransaccionidTipoTransaccion = :tipoTransaccionidTipoTransaccion"),
-    @NamedQuery(name = "Transaccion.findByMetododePagoidmetododePago", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.metododePagoidmetododePago = :metododePagoidmetododePago")})
+    @NamedQuery(name = "Transaccion.findByFecha", query = "SELECT t FROM Transaccion t WHERE t.fecha = :fecha")})
 public class Transaccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TransaccionPK transaccionPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idtransaccion")
+    private Integer idtransaccion;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -60,30 +59,35 @@ public class Transaccion implements Serializable {
     @Size(max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
+    @JoinColumn(name = "suscripcion_id", referencedColumnName = "idsuscripcion")
+    @ManyToOne(optional = false)
+    private Suscripcion suscripcionId;
+    @JoinColumn(name = "tipo_transaccion_id", referencedColumnName = "idtipo_transaccion")
+    @ManyToOne(optional = false)
+    private TipoTransaccion tipoTransaccionId;
+    @JoinColumn(name = "metodo_de_pago_id", referencedColumnName = "idmetodo_de_pago")
+    @ManyToOne(optional = false)
+    private MetodoDePago metodoDePagoId;
 
     public Transaccion() {
     }
 
-    public Transaccion(TransaccionPK transaccionPK) {
-        this.transaccionPK = transaccionPK;
+    public Transaccion(Integer idtransaccion) {
+        this.idtransaccion = idtransaccion;
     }
 
-    public Transaccion(TransaccionPK transaccionPK, BigDecimal monto, Date fecha) {
-        this.transaccionPK = transaccionPK;
+    public Transaccion(Integer idtransaccion, BigDecimal monto, Date fecha) {
+        this.idtransaccion = idtransaccion;
         this.monto = monto;
         this.fecha = fecha;
     }
 
-    public Transaccion(int idTransaccion, int suscripcionIdestadoSuscripcion, int suscripcionUsuarioIdusuario, int suscripcionUsuarioPaisIdpais, int suscripcionUsuarioRolIdrol, int suscripcionPlanSuscripcionIdplanSuscripcion, int suscripcionEstadoSuscripcionIdestadoSuscripcion, int tipoTransaccionidTipoTransaccion, int metododePagoidmetododePago) {
-        this.transaccionPK = new TransaccionPK(idTransaccion, suscripcionIdestadoSuscripcion, suscripcionUsuarioIdusuario, suscripcionUsuarioPaisIdpais, suscripcionUsuarioRolIdrol, suscripcionPlanSuscripcionIdplanSuscripcion, suscripcionEstadoSuscripcionIdestadoSuscripcion, tipoTransaccionidTipoTransaccion, metododePagoidmetododePago);
+    public Integer getIdtransaccion() {
+        return idtransaccion;
     }
 
-    public TransaccionPK getTransaccionPK() {
-        return transaccionPK;
-    }
-
-    public void setTransaccionPK(TransaccionPK transaccionPK) {
-        this.transaccionPK = transaccionPK;
+    public void setIdtransaccion(Integer idtransaccion) {
+        this.idtransaccion = idtransaccion;
     }
 
     public BigDecimal getMonto() {
@@ -110,10 +114,34 @@ public class Transaccion implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Suscripcion getSuscripcionId() {
+        return suscripcionId;
+    }
+
+    public void setSuscripcionId(Suscripcion suscripcionId) {
+        this.suscripcionId = suscripcionId;
+    }
+
+    public TipoTransaccion getTipoTransaccionId() {
+        return tipoTransaccionId;
+    }
+
+    public void setTipoTransaccionId(TipoTransaccion tipoTransaccionId) {
+        this.tipoTransaccionId = tipoTransaccionId;
+    }
+
+    public MetodoDePago getMetodoDePagoId() {
+        return metodoDePagoId;
+    }
+
+    public void setMetodoDePagoId(MetodoDePago metodoDePagoId) {
+        this.metodoDePagoId = metodoDePagoId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (transaccionPK != null ? transaccionPK.hashCode() : 0);
+        hash += (idtransaccion != null ? idtransaccion.hashCode() : 0);
         return hash;
     }
 
@@ -124,7 +152,7 @@ public class Transaccion implements Serializable {
             return false;
         }
         Transaccion other = (Transaccion) object;
-        if ((this.transaccionPK == null && other.transaccionPK != null) || (this.transaccionPK != null && !this.transaccionPK.equals(other.transaccionPK))) {
+        if ((this.idtransaccion == null && other.idtransaccion != null) || (this.idtransaccion != null && !this.idtransaccion.equals(other.idtransaccion))) {
             return false;
         }
         return true;
@@ -132,7 +160,7 @@ public class Transaccion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Transaccion[ transaccionPK=" + transaccionPK + " ]";
+        return "entities.Transaccion[ idtransaccion=" + idtransaccion + " ]";
     }
     
 }

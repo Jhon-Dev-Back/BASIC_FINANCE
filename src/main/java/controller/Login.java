@@ -58,11 +58,11 @@ public class Login implements Serializable {
     
     public String iniciarSesion(){
        user = this.ufl.iniciarSesion(usuario, contrasenna);
-        if (user.getIdentificacion() != null && user.getUsuarioPK().getRolIdrol() == 1) {
+        if (user.getIdentificacion() != null && user.getRolId().getIdrol() == 1) {
             HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
             return "/resources/views/inicio_Admin.xhtml?faces-redirect=true";
-        }else if(user.getIdentificacion() != null && user.getUsuarioPK().getRolIdrol() == 2){
+        }else if(user.getIdentificacion() != null && user.getRolId().getIdrol() == 2){
              HttpSession sesion = ( HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("usuario", usuario);
             return "/resources/views/inicio_Template.xhtml?faces-redirect=true";
