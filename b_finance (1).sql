@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-06-2025 a las 06:44:31
+-- Tiempo de generación: 26-06-2025 a las 02:30:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `estado_rol` (
   `idestado_rol` int(11) NOT NULL,
   `estado_rol` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `estado_rol`
@@ -49,7 +49,7 @@ INSERT INTO `estado_rol` (`idestado_rol`, `estado_rol`) VALUES
 CREATE TABLE `estado_suscripcion` (
   `idestado_suscripcion` int(11) NOT NULL,
   `nombre_estado` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -58,9 +58,9 @@ CREATE TABLE `estado_suscripcion` (
 --
 
 CREATE TABLE `metodo_de_pago` (
-  `idmetodo_de_Pago` int(11) NOT NULL,
+  `idmetodo_de_pago` int(11) NOT NULL,
   `nombre_pago` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `metodo_de_pago` (
 CREATE TABLE `pais` (
   `idpais` int(11) NOT NULL,
   `nombre_pais` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pais`
@@ -79,7 +79,7 @@ CREATE TABLE `pais` (
 
 INSERT INTO `pais` (`idpais`, `nombre_pais`) VALUES
 (1, 'Colombia'),
-(3, 'Mexico');
+(2, 'Brazil');
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ INSERT INTO `pais` (`idpais`, `nombre_pais`) VALUES
 CREATE TABLE `periodo` (
   `idperiodo` int(11) NOT NULL,
   `nombre` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `plan_suscripcion` (
   `precio` decimal(10,0) NOT NULL,
   `duracion` int(11) NOT NULL,
   `descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -117,12 +117,10 @@ CREATE TABLE `reporte` (
   `monto` decimal(10,0) NOT NULL,
   `fecha` date NOT NULL,
   `descripcion` text NOT NULL,
-  `tipo_reporte_idtipo_reporte` int(11) NOT NULL,
-  `usuario_idusuario` int(11) NOT NULL,
-  `usuario_pais_idpais` int(11) NOT NULL,
-  `usuario_rol_idrol` int(11) NOT NULL,
-  `periodo_idperiodo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `tipo_reporte_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `periodo_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -133,14 +131,14 @@ CREATE TABLE `reporte` (
 CREATE TABLE `rol` (
   `idrol` int(11) NOT NULL,
   `nombre_rol` varchar(50) NOT NULL,
-  `estado_rol_idestado_rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `estado_rol_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`idrol`, `nombre_rol`, `estado_rol_idestado_rol`) VALUES
+INSERT INTO `rol` (`idrol`, `nombre_rol`, `estado_rol_id`) VALUES
 (1, 'Administrador', 1),
 (2, 'Cliente', 1);
 
@@ -151,11 +149,10 @@ INSERT INTO `rol` (`idrol`, `nombre_rol`, `estado_rol_idestado_rol`) VALUES
 --
 
 CREATE TABLE `rol_has_usuario` (
-  `rol_idrol` int(11) NOT NULL,
-  `usuario_idusuario` int(11) NOT NULL,
-  `usuario_pais_idpais` int(11) NOT NULL,
-  `usuario_rol_idrol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -164,15 +161,13 @@ CREATE TABLE `rol_has_usuario` (
 --
 
 CREATE TABLE `suscripcion` (
-  `idestado_suscripcion` int(11) NOT NULL,
+  `idsuscripcion` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
-  `usuario_idusuario` int(11) NOT NULL,
-  `usuario_pais_idpais` int(11) NOT NULL,
-  `usuario_rol_idrol` int(11) NOT NULL,
-  `plan_suscripcion_idplan_suscripcion` int(11) NOT NULL,
-  `estado_suscripcion_idestado_suscripcion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `usuario_id` int(11) NOT NULL,
+  `plan_suscripcion_id` int(11) NOT NULL,
+  `estado_suscripcion_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -183,7 +178,7 @@ CREATE TABLE `suscripcion` (
 CREATE TABLE `tipo_reporte` (
   `idtipo_reporte` int(11) NOT NULL,
   `name_tipo_reporte` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -192,9 +187,9 @@ CREATE TABLE `tipo_reporte` (
 --
 
 CREATE TABLE `tipo_transaccion` (
-  `idTipo_Transaccion` int(11) NOT NULL,
+  `idtipo_transaccion` int(11) NOT NULL,
   `estado_transaccion` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -203,19 +198,14 @@ CREATE TABLE `tipo_transaccion` (
 --
 
 CREATE TABLE `transaccion` (
-  `idTransaccion` int(11) NOT NULL,
+  `idtransaccion` int(11) NOT NULL,
   `monto` decimal(10,2) NOT NULL,
   `fecha` date NOT NULL,
   `descripcion` text DEFAULT NULL,
-  `suscripcion_idestado_suscripcion` int(11) NOT NULL,
-  `suscripcion_usuario_idusuario` int(11) NOT NULL,
-  `suscripcion_usuario_pais_idpais` int(11) NOT NULL,
-  `suscripcion_usuario_rol_idrol` int(11) NOT NULL,
-  `suscripcion_plan_suscripcion_idplan_suscripcion` int(11) NOT NULL,
-  `suscripcion_estado_suscripcion_idestado_suscripcion` int(11) NOT NULL,
-  `tipo_Transaccion_idTipo_Transaccion` int(11) NOT NULL,
-  `metodo_de_Pago_idmetodo_de_Pago` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `suscripcion_id` int(11) NOT NULL,
+  `tipo_transaccion_id` int(11) NOT NULL,
+  `metodo_de_pago_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -231,22 +221,26 @@ CREATE TABLE `usuario` (
   `correo` varchar(100) NOT NULL,
   `telefono` char(15) NOT NULL,
   `direccion` varchar(100) NOT NULL,
-  `pais_idpais` int(11) NOT NULL,
-  `rol_idrol` int(11) NOT NULL,
   `edad` int(3) DEFAULT NULL,
-  `contraseña` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `contraseña` varchar(100) NOT NULL,
+  `pais_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idusuario`, `nombres`, `apellidos`, `identificacion`, `correo`, `telefono`, `direccion`, `pais_idpais`, `rol_idrol`, `edad`, `contraseña`) VALUES
-(8, 'Jhon Deibys', 'Sanabria Torres', '1006903532', 'jhonerrtes1@gmail.com', '3202790419', 'Calle 61b sur ', 1, 1, 24, 'jhon123'),
-(10, 'Carlos Mauricio', 'Cordoba', '1126615156', 'mauromash@gmail.com', '3254515155', 'calle 84a@54', 1, 2, 20, 'jhon123'),
-(11, 'Lized Dayana', 'Villanueva', '1109264270', 'lized@gmail.com', '3028044158', 'Calle 61b sur # 64b', 1, 2, 20, 'jhon123'),
-(12, 'Jaider ', 'Torres', '15151515', 'jader1416@gmail.com', '3214485645', 'Calle 61b sur # 64b', 3, 2, 21, 'jhon123'),
-(13, 'Carmen ', 'Torres', '5151515', 'carmen911@gmail.com', '3108719104', 'Calle 61b sur # 64b', 3, 2, 46, 'jhon123');
+INSERT INTO `usuario` (`idusuario`, `nombres`, `apellidos`, `identificacion`, `correo`, `telefono`, `direccion`, `edad`, `contraseña`, `pais_id`, `rol_id`) VALUES
+(1, 'Jhon Deibys', 'Sanabria Torres', '1006903532', 'jhonerrtes1@gmail.com', '3202790419', 'Calle 61 b sur # 94b - 63', 24, 'jhon123', 1, 1),
+(2, 'Lized Dayana', 'Villanueva Preciado', '1109264270', 'lized@gmail.com', '3028044158', 'Calle 61b sur # 64b', 20, 'jhon123', 1, 1),
+(3, 'Carlos ', 'Junco', '89496491', 'carjunc@gmail.com', '3102949956', 'Soacha - Fresi', 31, 'jhon123', 1, 1),
+(4, 'Jesus Crist', 'Alvarez', '21564526', 'jesuscrist@gmail.com', '3106466126', 'Costa', 31, 'jhon123', 1, 1),
+(6, 'jaider', 'Torres', '5151515', 'jader1416@gmail.com', '3214856196', 'Calle 61 b sur', 20, 'jhon123', 2, 2),
+(7, 'Carmen ', 'Torres', '40448911', 'carmen911@gmail.com', '3108719104', 'Calle 61b sur # 64b', 46, 'jhon123', 1, 2),
+(8, 'Mauricio', 'Cordoba', '123456789', 'mauromash@gmail.com', '3124178966', 'Santa Lucia', 20, 'jhon123', 2, 1),
+(9, 'Sonia', 'Cano ', '1006956945', 'soniacanog@gmail.com', '3217111981', 'Engativa', 20, 'jhon123', 1, 1),
+(11, 'Juan', 'Sevillano', '1009564872', 'juansec@gmail.com', '3204856941', 'Bosa', 20, 'jhon123', 1, 2);
 
 --
 -- Índices para tablas volcadas
@@ -269,7 +263,7 @@ ALTER TABLE `estado_suscripcion`
 -- Indices de la tabla `metodo_de_pago`
 --
 ALTER TABLE `metodo_de_pago`
-  ADD PRIMARY KEY (`idmetodo_de_Pago`);
+  ADD PRIMARY KEY (`idmetodo_de_pago`);
 
 --
 -- Indices de la tabla `pais`
@@ -293,34 +287,34 @@ ALTER TABLE `plan_suscripcion`
 -- Indices de la tabla `reporte`
 --
 ALTER TABLE `reporte`
-  ADD PRIMARY KEY (`idreporte`,`tipo_reporte_idtipo_reporte`,`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`,`periodo_idperiodo`),
-  ADD KEY `fk_reporte_tipo_reporte1_idx` (`tipo_reporte_idtipo_reporte`),
-  ADD KEY `fk_reporte_usuario1_idx` (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`),
-  ADD KEY `fk_reporte_periodo1_idx` (`periodo_idperiodo`);
+  ADD PRIMARY KEY (`idreporte`),
+  ADD KEY `tipo_reporte_id` (`tipo_reporte_id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `periodo_id` (`periodo_id`);
 
 --
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
   ADD PRIMARY KEY (`idrol`),
-  ADD KEY `fk_estado_rol` (`estado_rol_idestado_rol`);
+  ADD KEY `estado_rol_id` (`estado_rol_id`);
 
 --
 -- Indices de la tabla `rol_has_usuario`
 --
 ALTER TABLE `rol_has_usuario`
-  ADD PRIMARY KEY (`rol_idrol`,`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`),
-  ADD KEY `fk_rol_has_usuario_usuario1_idx` (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`),
-  ADD KEY `fk_rol_has_usuario_rol1_idx` (`rol_idrol`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `rol_id` (`rol_id`);
 
 --
 -- Indices de la tabla `suscripcion`
 --
 ALTER TABLE `suscripcion`
-  ADD PRIMARY KEY (`idestado_suscripcion`,`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`,`plan_suscripcion_idplan_suscripcion`,`estado_suscripcion_idestado_suscripcion`),
-  ADD KEY `fk_suscripcion_usuario1_idx` (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`),
-  ADD KEY `fk_suscripcion_plan_suscripcion1_idx` (`plan_suscripcion_idplan_suscripcion`),
-  ADD KEY `fk_suscripcion_estado_suscripcion1_idx` (`estado_suscripcion_idestado_suscripcion`);
+  ADD PRIMARY KEY (`idsuscripcion`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `plan_suscripcion_id` (`plan_suscripcion_id`),
+  ADD KEY `estado_suscripcion_id` (`estado_suscripcion_id`);
 
 --
 -- Indices de la tabla `tipo_reporte`
@@ -332,24 +326,25 @@ ALTER TABLE `tipo_reporte`
 -- Indices de la tabla `tipo_transaccion`
 --
 ALTER TABLE `tipo_transaccion`
-  ADD PRIMARY KEY (`idTipo_Transaccion`);
+  ADD PRIMARY KEY (`idtipo_transaccion`);
 
 --
 -- Indices de la tabla `transaccion`
 --
 ALTER TABLE `transaccion`
-  ADD PRIMARY KEY (`idTransaccion`,`suscripcion_idestado_suscripcion`,`suscripcion_usuario_idusuario`,`suscripcion_usuario_pais_idpais`,`suscripcion_usuario_rol_idrol`,`suscripcion_plan_suscripcion_idplan_suscripcion`,`suscripcion_estado_suscripcion_idestado_suscripcion`,`tipo_Transaccion_idTipo_Transaccion`,`metodo_de_Pago_idmetodo_de_Pago`),
-  ADD KEY `fk_Transaccion_suscripcion1_idx` (`suscripcion_idestado_suscripcion`,`suscripcion_usuario_idusuario`,`suscripcion_usuario_pais_idpais`,`suscripcion_usuario_rol_idrol`,`suscripcion_plan_suscripcion_idplan_suscripcion`,`suscripcion_estado_suscripcion_idestado_suscripcion`),
-  ADD KEY `fk_Transaccion_tipo_Transaccion1_idx` (`tipo_Transaccion_idTipo_Transaccion`),
-  ADD KEY `fk_Transaccion_metodo_de_Pago1_idx` (`metodo_de_Pago_idmetodo_de_Pago`);
+  ADD PRIMARY KEY (`idtransaccion`),
+  ADD KEY `suscripcion_id` (`suscripcion_id`),
+  ADD KEY `tipo_transaccion_id` (`tipo_transaccion_id`),
+  ADD KEY `metodo_de_pago_id` (`metodo_de_pago_id`);
 
 --
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idusuario`,`pais_idpais`,`rol_idrol`),
-  ADD UNIQUE KEY `identificacion_UNIQUE` (`identificacion`),
-  ADD KEY `fk_usuario_pais_idx` (`pais_idpais`);
+  ADD PRIMARY KEY (`idusuario`),
+  ADD UNIQUE KEY `identificacion` (`identificacion`),
+  ADD KEY `pais_id` (`pais_id`),
+  ADD KEY `rol_id` (`rol_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -371,13 +366,13 @@ ALTER TABLE `estado_suscripcion`
 -- AUTO_INCREMENT de la tabla `metodo_de_pago`
 --
 ALTER TABLE `metodo_de_pago`
-  MODIFY `idmetodo_de_Pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmetodo_de_pago` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
-  MODIFY `idpais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idpais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `periodo`
@@ -401,13 +396,19 @@ ALTER TABLE `reporte`
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `rol_has_usuario`
+--
+ALTER TABLE `rol_has_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `suscripcion`
 --
 ALTER TABLE `suscripcion`
-  MODIFY `idestado_suscripcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idsuscripcion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_reporte`
@@ -419,19 +420,19 @@ ALTER TABLE `tipo_reporte`
 -- AUTO_INCREMENT de la tabla `tipo_transaccion`
 --
 ALTER TABLE `tipo_transaccion`
-  MODIFY `idTipo_Transaccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtipo_transaccion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `transaccion`
 --
 ALTER TABLE `transaccion`
-  MODIFY `idTransaccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtransaccion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
@@ -441,44 +442,45 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `reporte`
 --
 ALTER TABLE `reporte`
-  ADD CONSTRAINT `fk_reporte_periodo1` FOREIGN KEY (`periodo_idperiodo`) REFERENCES `mydb`.`periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reporte_tipo_reporte1` FOREIGN KEY (`tipo_reporte_idtipo_reporte`) REFERENCES `mydb`.`tipo_reporte` (`idtipo_reporte`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_reporte_usuario1` FOREIGN KEY (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`) REFERENCES `mydb`.`usuario` (`idusuario`, `pais_idpais`, `rol_idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `reporte_ibfk_1` FOREIGN KEY (`tipo_reporte_id`) REFERENCES `tipo_reporte` (`idtipo_reporte`),
+  ADD CONSTRAINT `reporte_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`idusuario`),
+  ADD CONSTRAINT `reporte_ibfk_3` FOREIGN KEY (`periodo_id`) REFERENCES `periodo` (`idperiodo`);
 
 --
 -- Filtros para la tabla `rol`
 --
 ALTER TABLE `rol`
-  ADD CONSTRAINT `fk_estado_rol` FOREIGN KEY (`estado_rol_idestado_rol`) REFERENCES `estado_rol` (`idestado_rol`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `rol_ibfk_1` FOREIGN KEY (`estado_rol_id`) REFERENCES `estado_rol` (`idestado_rol`);
 
 --
 -- Filtros para la tabla `rol_has_usuario`
 --
 ALTER TABLE `rol_has_usuario`
-  ADD CONSTRAINT `fk_rol_has_usuario_rol1` FOREIGN KEY (`rol_idrol`) REFERENCES `mydb`.`rol` (`idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_rol_has_usuario_usuario1` FOREIGN KEY (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`) REFERENCES `mydb`.`usuario` (`idusuario`, `pais_idpais`, `rol_idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `rol_has_usuario_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`idusuario`),
+  ADD CONSTRAINT `rol_has_usuario_ibfk_2` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`idrol`);
 
 --
 -- Filtros para la tabla `suscripcion`
 --
 ALTER TABLE `suscripcion`
-  ADD CONSTRAINT `fk_suscripcion_estado_suscripcion1` FOREIGN KEY (`estado_suscripcion_idestado_suscripcion`) REFERENCES `mydb`.`estado_suscripcion` (`idestado_suscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_suscripcion_plan_suscripcion1` FOREIGN KEY (`plan_suscripcion_idplan_suscripcion`) REFERENCES `mydb`.`plan_suscripcion` (`idplan_suscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_suscripcion_usuario1` FOREIGN KEY (`usuario_idusuario`,`usuario_pais_idpais`,`usuario_rol_idrol`) REFERENCES `mydb`.`usuario` (`idusuario`, `pais_idpais`, `rol_idrol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `suscripcion_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`idusuario`),
+  ADD CONSTRAINT `suscripcion_ibfk_2` FOREIGN KEY (`plan_suscripcion_id`) REFERENCES `plan_suscripcion` (`idplan_suscripcion`),
+  ADD CONSTRAINT `suscripcion_ibfk_3` FOREIGN KEY (`estado_suscripcion_id`) REFERENCES `estado_suscripcion` (`idestado_suscripcion`);
 
 --
 -- Filtros para la tabla `transaccion`
 --
 ALTER TABLE `transaccion`
-  ADD CONSTRAINT `fk_Transaccion_metodo_de_Pago1` FOREIGN KEY (`metodo_de_Pago_idmetodo_de_Pago`) REFERENCES `mydb`.`metodo_de_pago` (`idmetodo_de_Pago`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Transaccion_suscripcion1` FOREIGN KEY (`suscripcion_idestado_suscripcion`,`suscripcion_usuario_idusuario`,`suscripcion_usuario_pais_idpais`,`suscripcion_usuario_rol_idrol`,`suscripcion_plan_suscripcion_idplan_suscripcion`,`suscripcion_estado_suscripcion_idestado_suscripcion`) REFERENCES `mydb`.`suscripcion` (`idestado_suscripcion`, `usuario_idusuario`, `usuario_pais_idpais`, `usuario_rol_idrol`, `plan_suscripcion_idplan_suscripcion`, `estado_suscripcion_idestado_suscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Transaccion_tipo_Transaccion1` FOREIGN KEY (`tipo_Transaccion_idTipo_Transaccion`) REFERENCES `mydb`.`tipo_transaccion` (`idTipo_Transaccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `transaccion_ibfk_1` FOREIGN KEY (`suscripcion_id`) REFERENCES `suscripcion` (`idsuscripcion`),
+  ADD CONSTRAINT `transaccion_ibfk_2` FOREIGN KEY (`tipo_transaccion_id`) REFERENCES `tipo_transaccion` (`idtipo_transaccion`),
+  ADD CONSTRAINT `transaccion_ibfk_3` FOREIGN KEY (`metodo_de_pago_id`) REFERENCES `metodo_de_pago` (`idmetodo_de_pago`);
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `fk_usuario_pais` FOREIGN KEY (`pais_idpais`) REFERENCES `pais` (`idpais`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`idpais`),
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`idrol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
