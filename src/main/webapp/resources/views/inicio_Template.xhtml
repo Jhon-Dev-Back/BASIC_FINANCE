@@ -2,14 +2,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      >
+          
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body class="templateA">
 
         <ui:composition template="./TemplateGeneral.xhtml">
-
+            
             <ui:define name="content">
-               
+                
+                <div class="container">
+                    <div class="card">
+                        <figure>
+                             <h:graphicImage library="images" name="images.jpeg"/>
+                        </figure>
+                        <div class="contenido">
+                            <h3>CONTROL FINANCIERO</h3>
+                            <p>
+                               Accede a tu información financiera en cualquier momento
+                              Con nuestra aplicación, tienes acceso rápido y seguro a todos los datos financieros que has registrado. 
+                              Desde tus ingresos hasta tus gastos diarios, todo está organizado en un solo lugar para que puedas
+                              tomar decisiones informadas con confianza. 
+                            </p>
+                            <a href="#">Leer Mas</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <figure>
+                            <h:graphicImage library="images" name="descarga.jpeg"/>
+                        </figure>
+                        <div class="contenido">
+                            <h3>TU PROGRESO EN METAS</h3>
+                            <p>
+                               Supervisa tu progreso hacia las metas que tú mismo estableciste
+                               Nuestra plataforma te permite crear metas financieras personalizadas 
+                               —ya sea ahorrar para un viaje, pagar una deuda o invertir en tu futuro— 
+                               y seguir su evolución paso a paso. Cada vez que registras un ingreso o 
+                               haces un ahorro, el sistema actualiza automáticamente tu avance.
+                            </p>
+                            <a href="#">Leer Mas</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <figure>
+                            <h:graphicImage library="images" name="imp.jpeg"/>
+                        </figure>
+                        <div class="contenido">
+                            <h3>INFORMACION SOBRE IMPUESTOS</h3>
+                            <p>
+                               Mantente al día con tus obligaciones fiscales
+                               Nuestra aplicación te brinda acceso claro y actualizado 
+                               a la información relacionada con tus impuestos personales. 
+                               Desde resúmenes de tus ingresos hasta proyecciones de 
+                               posibles retenciones o pagos, todo está organizado para 
+                               que entiendas tu situación fiscal sin complicaciones.
+                            </p>
+                            <a href="#">Leer Mas</a>
+                        </div>
+                    </div>
+                </div>
 
             </ui:define>
 

@@ -36,21 +36,21 @@
     <h:body>
 
         <div id="top">
-            
-                <button type="button" class="btn btn-primary" onclick="toggleLeft()">
-                    &#9776;
-                </button>
-                <figure>
-                    <h:graphicImage library="images" name="Logo.png"/>
-                </figure>
-                <a href="inicio_Admin.xhtml">USUARIOS REGISTRADOS</a>
-                <a href="">SUSCRIPCIONES</a>
-                <a href="">REPORTES</a>
-                <a href="suscripciones_Template.xhtml">NOTIFICACIONES</a>
-                <h:form> <h:commandButton value="Cerrar Sesion"  styleClass="btn btn-primary" action="#{login.cerrarSesion()}" onclick=" return confirm('¿Desea Cerrar Sesion?')" >
-                      
-                    </h:commandButton></h:form>
-          
+
+            <button type="button" class="btns btn-primary" onclick="toggleLeft()">
+                &#9776;
+            </button>
+            <figure>
+                <h:graphicImage library="images" name="Logo.png"/>
+            </figure>
+            <h:form><h:commandLink action="#{usuariosController.redirigir()}" value="USUARIOS REGISTRADOS" /></h:form>
+            <a href="">SUSCRIPCIONES</a>
+            <a href="">REPORTES</a>
+            <a href="suscripciones_Template.xhtml">NOTIFICACIONES</a>
+            <h:form> <h:commandButton value="Cerrar Sesion"  styleClass="btns btn-primary" action="#{login.cerrarSesion()}" onclick=" return confirm('¿Desea Cerrar Sesion?')" >
+
+                </h:commandButton></h:form>
+
         </div>
 
         <div class="layout-wrapper">

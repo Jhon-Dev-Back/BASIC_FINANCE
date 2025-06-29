@@ -21,34 +21,36 @@
 
                             </thead>
                             <tbody>
-                                <tr><td>NOMBRES</td></tr>
-                                <tr> <td><h:inputText  id="Nombres" value="#{usuariosController.user.nombres}" required="true" styleClass="form-control"  /></td></tr>
-                                <tr><td>APELLIDOS</td></tr>
-                                <tr><td><h:inputText  id="Apellidos" value="#{usuariosController.user.apellidos}"  required="true" styleClass="form-control"  /></td></tr>
-                                <tr> <td>IDENTIFICACION</td></tr>
-                                <tr> <td><h:inputText  id="Identificacion" value="#{usuariosController.user.identificacion}" required="true" styleClass="form-control"  /></td></tr>
-                                <tr> <td>CORREO</td></tr>
-                                <tr><td><h:inputText  id="Email" value="#{usuariosController.user.correo}" required="true" styleClass="form-control"  /></td></tr>
-                                <tr><td>TELEFONO</td></tr>
-                                <tr> <td><h:inputText  id="Telefono" value="#{usuariosController.user.telefono}"  required="true" styleClass="form-control"  /></td></tr>
-                                <tr> <td>DIRECCION</td></tr>
-                                <tr><td><h:inputText  id="Direccion"  value="#{usuariosController.user.direccion}" required="true" styleClass="form-control"  /></td></tr>
-                                <tr> <td>CONTRASEÑA</td></tr>
-                                <tr><td><h:inputText  id="Contraseña"  value="#{usuariosController.user.contraseña}" required="true" styleClass="form-control"  /></td></tr>
-                                <tr> <td>EDAD</td></tr>
-                                <tr><td><h:inputText  id="Edad" value="#{usuariosController.user.edad}" required="true"  styleClass="form-control"  /></td></tr>
-                                <tr> <td>ESTADO</td></tr>
-                                <tr><td><h:selectOneMenu value="#{usuariosController.est.estadoRol}" styleClass="form-select">
-                                    <f:selectItems value="#{usuariosController.listarEstados()}" />
-                                        </h:selectOneMenu></td></tr>
-                                <tr> <td>PAIS</td></tr>
+                                <tr><td>NOMBRES</td><td>APELLIDOS</td><td>IDENTIFICACION</td></tr>
+                                <tr> <td><h:inputText  id="Nombres" value="#{usuariosController.user.nombres}" required="true" styleClass="form-control"  /></td>
+                                    <td><h:inputText  id="Apellidos" value="#{usuariosController.user.apellidos}"  required="true" styleClass="form-control"  /></td>
+                                    <td><h:inputText  id="Identificacion" value="#{usuariosController.user.identificacion}" required="true" styleClass="form-control"  /></td>
+                                </tr>
+                                
+                                
+                                <tr> <td>CORREO</td><td>TELEFONO</td> <td>DIRECCION</td></tr>
+                                <tr><td><h:inputText  id="Email" value="#{usuariosController.user.correo}" required="true" styleClass="form-control"  /></td>
+                                      <td><h:inputText  id="Telefono" value="#{usuariosController.user.telefono}"  required="true" styleClass="form-control"  /></td>
+                                      <td><h:inputText  id="Direccion"  value="#{usuariosController.user.direccion}" required="true" styleClass="form-control"  /></td>
+                                </tr>
+                              
+                                <tr> <td>CONTRASEÑA</td><td>EDAD</td> <td>ESTADO</td></tr>
+                                <tr><td><h:inputText  id="Contraseña"  value="#{usuariosController.user.contraseña}" required="true" styleClass="form-control"  /></td>
+                                    <td><h:inputText  id="Edad" value="#{usuariosController.user.edad}" required="true"  styleClass="form-control"  /></td>
+                                    <td><h:selectOneMenu value="#{usuariosController.est.estadoRol}" styleClass="form-select">
+                                            <f:selectItems value="#{usuariosController.listarEstados()}" />
+                                        </h:selectOneMenu></td>
+                                </tr>
+                                
+                                <tr> <td>PAIS</td><td>ROL ID</td></tr>
                                 <tr><td><h:selectOneMenu value="#{usuariosController.user.paisId.idpais}" id="Pais" styleClass="form-select">
                                             <f:selectItems value="#{usuariosController.listarPaises()}" />
-                                        </h:selectOneMenu></td></tr>
-                                <tr> <td>ROL ID</td></tr>
-                                <tr> <td><h:selectOneMenu id="Rol" value="#{usuariosController.user.rolId.idrol}" styleClass="form-select">
+                                        </h:selectOneMenu></td>
+                                      <td><h:selectOneMenu id="Rol" value="#{usuariosController.user.rolId.idrol}" styleClass="form-select">
                                             <f:selectItems value="#{usuariosController.listarRolAdmin()}" />
-                                        </h:selectOneMenu></td></tr>
+                                        </h:selectOneMenu></td>
+                                </tr>
+                               
                                 <tr><td>
                                         <h:messages id="mensajes" infoClass="color: red;" globalOnly="true"   />    
                                         <h:commandButton value="REGISTRAR"  action="#{usuariosController.crearUsuario()}"  rendered="#{usuariosController.user.identificacion == null}" class="btn btn-primary" />

@@ -233,7 +233,7 @@ public class UsuariosController implements Serializable {
             context.addMessage(null, fm);
         } catch (Exception e) {
         }
-        return "crear_usuarios_Admin.xhtml?faces-redirect=true";
+        return "inicio_Admin.xhtml?faces-redirect=true";
 
     }
 
@@ -245,6 +245,12 @@ public class UsuariosController implements Serializable {
             context.addMessage(null, fm);
         } catch (Exception e) {
         }
+    }
+    
+    public String redirigir(){
+        
+        crearUsuario();
+        return "inicio_Admin.xhtml";
     }
 
 }
