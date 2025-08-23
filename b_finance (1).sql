@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2025 a las 02:30:09
+-- Tiempo de generación: 23-08-2025 a las 02:17:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -79,7 +79,9 @@ CREATE TABLE `pais` (
 
 INSERT INTO `pais` (`idpais`, `nombre_pais`) VALUES
 (1, 'Colombia'),
-(2, 'Brazil');
+(2, 'Brazil'),
+(3, 'Mexico'),
+(4, 'Argentina');
 
 -- --------------------------------------------------------
 
@@ -224,23 +226,18 @@ CREATE TABLE `usuario` (
   `edad` int(3) DEFAULT NULL,
   `contraseña` varchar(100) NOT NULL,
   `pais_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL
+  `rol_id` int(11) NOT NULL,
+  `nombre_usuario` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idusuario`, `nombres`, `apellidos`, `identificacion`, `correo`, `telefono`, `direccion`, `edad`, `contraseña`, `pais_id`, `rol_id`) VALUES
-(1, 'Jhon Deibys', 'Sanabria Torres', '1006903532', 'jhonerrtes1@gmail.com', '3202790419', 'Calle 61 b sur # 94b - 63', 24, 'jhon123', 1, 1),
-(2, 'Lized Dayana', 'Villanueva Preciado', '1109264270', 'lized@gmail.com', '3028044158', 'Calle 61b sur # 64b', 20, 'jhon123', 1, 1),
-(3, 'Carlos ', 'Junco', '89496491', 'carjunc@gmail.com', '3102949956', 'Soacha - Fresi', 31, 'jhon123', 1, 1),
-(4, 'Jesus Crist', 'Alvarez', '21564526', 'jesuscrist@gmail.com', '3106466126', 'Costa', 31, 'jhon123', 1, 1),
-(6, 'jaider', 'Torres', '5151515', 'jader1416@gmail.com', '3214856196', 'Calle 61 b sur', 20, 'jhon123', 2, 2),
-(7, 'Carmen ', 'Torres', '40448911', 'carmen911@gmail.com', '3108719104', 'Calle 61b sur # 64b', 46, 'jhon123', 1, 2),
-(8, 'Mauricio', 'Cordoba', '123456789', 'mauromash@gmail.com', '3124178966', 'Santa Lucia', 20, 'jhon123', 2, 1),
-(9, 'Sonia', 'Cano ', '1006956945', 'soniacanog@gmail.com', '3217111981', 'Engativa', 20, 'jhon123', 1, 1),
-(11, 'Juan', 'Sevillano', '1009564872', 'juansec@gmail.com', '3204856941', 'Bosa', 20, 'jhon123', 1, 2);
+INSERT INTO `usuario` (`idusuario`, `nombres`, `apellidos`, `identificacion`, `correo`, `telefono`, `direccion`, `edad`, `contraseña`, `pais_id`, `rol_id`, `nombre_usuario`) VALUES
+(1, 'Jhon Deibys', 'Sanabria Torres', '1006903532', 'jhonerrtes1@gmail.com', '3202790419', 'Calle 61 b sur # 94b - 63', 24, 'jhon123', 2, 1, 'jhon_dev_'),
+(40, 'Carmen ', 'Torres Ramirez', '40448911', 'carmen911@gmail.com', '3102949956', 'Calle 61 b sur # 94b - 63', 40, 'jhon123', 1, 2, 'caroTorres'),
+(41, 'Carlos Arturo', 'Junco', '1009562313', 'carjunc@gmail.com', '3176556262', 'Soacha - Fresi', 31, 'jhon123', 4, 2, 'carjun');
 
 --
 -- Índices para tablas volcadas
@@ -372,7 +369,7 @@ ALTER TABLE `metodo_de_pago`
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
-  MODIFY `idpais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idpais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `periodo`
@@ -432,7 +429,7 @@ ALTER TABLE `transaccion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Restricciones para tablas volcadas
